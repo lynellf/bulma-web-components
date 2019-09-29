@@ -1,12 +1,257 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Bulma Web Components</title>
-</head>
-<body>
-  
-</body>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css"
+    />
+    <style>
+      body {
+        padding: 1rem;
+      }
+    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Bulma Web Components</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="title">Card One (Current)</h1>
+      <br />
+      <bulma-card test-id="cardOne">
+        <card-image
+          size="4by3"
+          src="https://bulma.io/images/placeholders/1280x960.png"
+          alt="Placeholder image"
+        ></card-image>
+        <card-content>
+          <div class="media">
+            <div class="media-left">
+              <figure class="image is-48x48">
+                <img
+                  src="https://bulma.io/images/placeholders/96x96.png"
+                  alt="Placeholder image"
+                />
+              </figure>
+            </div>
+            <div class="media-content">
+              <p class="title is-4">John Smith</p>
+              <p class="subtitle is-6">@johnsmith</p>
+            </div>
+          </div>
+          <div class="content">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
+            nec iaculis mauris. <a>@bulmaio</a>. <a href="#">#css</a>
+            <a href="#">#responsive</a>
+            <br />
+            <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+          </div>
+        </card-content>
+      </bulma-card>
+    </div>
+    <br />
+    <div class="container">
+      <h1 class="title">Card One (Expected)</h1>
+      <br />
+      <bulma-card>
+        <div class="card">
+          <card-image
+            dimension="4by3"
+            src="https://bulma.io/images/placeholders/1280x960.png"
+            alt="Placeholder image"
+          >
+            <figure class="image is-4by3">
+              <img
+                src="https://bulma.io/images/placeholders/1280x960.png"
+                alt="https://bulma.io/images/placeholders/1280x960.png"
+              />
+            </figure>
+          </card-image>
+          <card-content>
+            <div class="card-content">
+              <div class="media">
+                <div class="media-left">
+                  <figure class="image is-48x48">
+                    <img
+                      src="https://bulma.io/images/placeholders/96x96.png"
+                      alt="Placeholder image"
+                    />
+                  </figure>
+                </div>
+                <div class="media-content">
+                  <p class="title is-4">John Smith</p>
+                  <p class="subtitle is-6">@johnsmith</p>
+                </div>
+              </div>
+
+              <div class="content">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Phasellus nec iaculis mauris. <a>@bulmaio</a>.
+                <a href="#">#css</a> <a href="#">#responsive</a>
+                <br />
+                <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+              </div>
+            </div>
+          </card-content>
+        </div>
+      </bulma-card>
+    </div>
+
+    <!-- <div class="container">
+      <h1>Test Two</h1>
+      <bulma-card>
+        <card-header>
+          <card-header-title>
+            Component
+          </card-header-title>
+          <card-header-icon href="#" aria-label="more-options">
+            <i class="fas fa-angle-down" aria-hidden="true"></i>
+          </card-header-icon>
+        </card-header>
+        <card-content>
+          <div class="content">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
+            nec iaculis mauris.
+            <a href="#">@bulmaio</a>. <a href="#">#css</a>
+            <a href="#">#responsive</a>
+            <br />
+            <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+          </div>
+        </card-content>
+        <card-footer>
+          <card-footer-item href="#">Save</card-footer-item>
+          <card-footer-item href="#">Edit</card-footer-item>
+          <card-footer-item href="#">Delete</card-footer-item>
+        </card-footer>
+      </bulma-card>
+    </div>
+    <div class="container">
+      <h1>Test Three</h1>
+      <bulma-card>
+        <card-content>
+          <p class="title">
+            “There are two hard things in computer science: cache invalidation,
+            naming things, and off-by-one errors.”
+          </p>
+          <p class="subtitle">
+            Jeff Atwood
+          </p>
+        </card-content>
+        <card-footer>
+          <card-footer-item tag="p">
+            <span>
+              View on
+              <a
+                href="https://twitter.com/codinghorror/status/506010907021828096"
+                >Twitter</a
+              >
+            </span>
+          </card-footer-item>
+          <card-footer-item tag="p">
+            <span> Share on <a href="#">Facebook</a> </span>
+          </card-footer-item>
+        </card-footer>
+      </bulma-card>
+    </div>
+
+    <div class="container">
+      <h1>Base</h1>
+    </div>
+    <div class="container">
+      <h1>Test One</h1>
+      <div class="card">
+        <div class="card-image">
+          <figure class="image is-4by3">
+            <img
+              src="https://bulma.io/images/placeholders/1280x960.png"
+              alt="Placeholder image"
+            />
+          </figure>
+        </div>
+        <div class="card-content">
+          <div class="media">
+            <div class="media-left">
+              <figure class="image is-48x48">
+                <img
+                  src="https://bulma.io/images/placeholders/96x96.png"
+                  alt="Placeholder image"
+                />
+              </figure>
+            </div>
+            <div class="media-content">
+              <p class="title is-4">John Smith</p>
+              <p class="subtitle is-6">@johnsmith</p>
+            </div>
+          </div>
+
+          <div class="content">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
+            nec iaculis mauris. <a>@bulmaio</a>. <a href="#">#css</a>
+            <a href="#">#responsive</a>
+            <br />
+            <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <h1>Test Two</h1>
+      <div class="card">
+        <header class="card-header">
+          <p class="card-header-title">
+            Component
+          </p>
+          <a href="#" class="card-header-icon" aria-label="more options">
+            <span class="icon">
+              <i class="fas fa-angle-down" aria-hidden="true"></i>
+            </span>
+          </a>
+        </header>
+        <div class="card-content">
+          <div class="content">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
+            nec iaculis mauris.
+            <a href="#">@bulmaio</a>. <a href="#">#css</a>
+            <a href="#">#responsive</a>
+            <br />
+            <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+          </div>
+        </div>
+        <footer class="card-footer">
+          <a href="#" class="card-footer-item">Save</a>
+          <a href="#" class="card-footer-item">Edit</a>
+          <a href="#" class="card-footer-item">Delete</a>
+        </footer>
+      </div>
+    </div>
+    <div class="container">
+      <h1>Test Three</h1>
+      <div class="card">
+        <div class="card-content">
+          <p class="title">
+            “There are two hard things in computer science: cache invalidation,
+            naming things, and off-by-one errors.”
+          </p>
+          <p class="subtitle">
+            Jeff Atwood
+          </p>
+        </div>
+        <footer class="card-footer">
+          <p class="card-footer-item">
+            <span>
+              View on
+              <a
+                href="https://twitter.com/codinghorror/status/506010907021828096"
+                >Twitter</a
+              >
+            </span>
+          </p>
+          <p class="card-footer-item">
+            <span> Share on <a href="#">Facebook</a> </span>
+          </p>
+        </footer>
+      </div>
+    </div> -->
+  </body>
 </html>
