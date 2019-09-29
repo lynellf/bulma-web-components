@@ -46,14 +46,14 @@ describe("Bulma Card Web Components", () => {
     // Assertion Four
     // Image component is valid
     const imageComponentSrc = cardImageComponent.getAttribute("src")
-    const imageComponentDimension = cardImageComponent.getAttribute("dimenson")
+    const imageComponentDimension = cardImageComponent.getAttribute("dimension")
     const imageComponentAlt = cardImageComponent.getAttribute("alt")
     const cardImageComponentChildren = [...cardImageComponent.children]
     const cardImageFigure = cardImageComponentChildren[0]
     const figureChildren = [...cardImageFigure.children]
     const figureImage = figureChildren[0]
     const imageSrc = figureImage.getAttribute("src")
-    const imageAlt = figure
+    const imageAlt = figureImage.getAttribute("alt")
     const figureClassName = cardImageFigure.className
     const hasFigureImage = figureImage !== undefined
     const figureHasImageClass = figureClassName.includes("image")
