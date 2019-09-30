@@ -1,6 +1,6 @@
 const { JSDOM } = require("jsdom")
 
-describe("Bulma Card Web Components", () => {
+describe("Bulma Card Web Components Page", () => {
   let htmlString = ""
   let win
   let doc
@@ -13,15 +13,33 @@ describe("Bulma Card Web Components", () => {
     doc = win.document
   })
 
-  it("card one exists", () => {
-    // Assertion One
-    // Basic Smoke Test
+  /**
+   * @param {HTMLElement|Element} element
+   * @param {number} count
+   */
+  const getChildren = (element, count) => {
+    const children = [...element.children]
+    const hasExpectedSize = children.length === count
+    return { hasExpectedSize, children }
+  }
+
+  /**
+   * @param {HTMLElement | Element} element
+   * @param {string[]} attributeArray
+   */
+  const getAttributes = (element, attributeArray) => {
+    /**@type {{ [key: string]: string }} */
+    const outputObj = {}
+    const attributes = attributeArray.reduce((output, attr) => {
+      output[attr] = element.getAttribute(attr)
+      return output
+    }, outputObj)
+    return attributes
+  }
+
+  it("has card one", () => {
     const cardOne = doc.querySelector('bulma-card[test-id^="cardOne"]')
     const cardOneExists = cardOne !== null
-    expect(cardOneExists).toBe(true)
-
-    // Assertion Two
-    // Card Div element exists
     const cardChildren = [...cardOne.children]
     const hasOneChild = cardChildren.length === 1
     const cardDiv = cardChildren[0]
@@ -29,22 +47,34 @@ describe("Bulma Card Web Components", () => {
     const cardDivClass = cardDiv.className
     const hasValidClass = cardDivClass.includes("card")
     const cardDivExists = hasOneChild && childIsDiv && hasValidClass
-    expect(cardDivExists).toBe(true)
+    const componentIsValid = cardOneExists && cardDivExists
+    expect(componentIsValid).toBe(true)
+  })
 
-    // Assertion Three
-    // Card Div is valid
-    const cardDivChildren = [...cardDiv.children]
-    const cardDivHasTwoChildren = cardDivChildren.length === 2
-    const cardImageComponent = cardDivChildren[0]
-    const cardContentComponent = cardDivChildren[1]
-    const hasCardImageComponent = cardImageComponent !== undefined
-    const hasCardContentComponent = cardContentComponent !== undefined
-    const cardDivHasValidChildren =
-      cardDivHasTwoChildren && hasCardImageComponent && hasCardContentComponent
-    expect(cardDivHasValidChildren).toBe(true)
+  it("has a card content component", () => {
+    // Assertion Five
+    // Card content component is valid
+    const cardContentComponent = doc.querySelector(
+      'card-content[test-id^="cardContent0"]'
+    )
+    const cardContentChildren = [...cardContentComponent.children]
+    const cardContentDiv = cardContentChildren[0]
+    const cardContentDivIsDiv = cardContentDiv.tagName === "DIV"
+    const cardContentDivClass = cardContentDiv.className
+    const hasValidCardContentClass = cardContentDivClass.includes(
+      "card-content"
+    )
+    const contentComponentIsValid =
+      cardContentDivIsDiv && hasValidCardContentClass
+    expect(contentComponentIsValid).toBe(true)
+  })
 
+  it("has a card image component", () => {
     // Assertion Four
     // Image component is valid
+    const cardImageComponent = doc.querySelector(
+      'card-image[test-id^="cardImage0"]'
+    )
     const imageComponentSrc = cardImageComponent.getAttribute("src")
     const imageComponentDimension = cardImageComponent.getAttribute("dimension")
     const imageComponentAlt = cardImageComponent.getAttribute("alt")
@@ -69,18 +99,179 @@ describe("Bulma Card Web Components", () => {
       hasImageSrcMatch &&
       hasImageAltMatch
     expect(imageComponentIsValid).toBe(true)
+  })
 
-    // Assertion Five
-    // Card content component is valid
-    const cardContentChildren = [...cardContentComponent.children]
-    const cardContentDiv = cardContentChildren[0]
-    const cardContentDivIsDiv = cardContentDiv.tagName === "DIV"
-    const cardContentDivClass = cardContentDiv.className
-    const hasValidCardContentClass = cardContentDivClass.includes(
-      "card-content"
+  it("has a card footer item component containing an a element as its only child element", () => {
+    /**@type {HTMLElement} */
+    const footerItemComponent = doc.querySelector(
+      'card-footer-item[test-id^="cardFooterItem0"]'
     )
-    const contentComponentIsValid =
-      cardContentDivIsDiv && hasValidCardContentClass
-    expect(contentComponentIsValid).toBe(true)
+    const { hasExpectedSize, children } = getChildren(footerItemComponent, 1)
+    const href = footerItemComponent.getAttribute("href")
+    const aTag = children.find(node => node.tagName === "A")
+    const hasATag = aTag !== undefined
+    const aTagHref = aTag.getAttribute("href")
+    const hrefMatch = href === aTagHref
+    const aTagClassNameMatch = aTag.className.includes("card-footer-item")
+    const classNameMatch = footerItemComponent.className.includes(
+      "card-footer-item"
+    )
+    const hasNoPadding = footerItemComponent.style.padding === "0px"
+    const componentIsValid =
+      hasExpectedSize &&
+      hasATag &&
+      hrefMatch &&
+      classNameMatch &&
+      aTagClassNameMatch &&
+      hasNoPadding
+    expect(componentIsValid).toBe(true)
+  })
+
+  it("has a card footer component containing a footer element as its only child element", () => {
+    const footerComponent = doc.querySelector(
+      'card-footer[test-id^="cardFooter0"]'
+    )
+    const { hasExpectedSize, children } = getChildren(footerComponent, 1)
+    const footerElement = children.find(node => node.tagName === "FOOTER")
+    const hasFooterElement = footerElement !== undefined
+    const footerClassName = footerElement.className
+    const footerClassNameMatch = footerClassName.includes("card-footer")
+    const componentIsValid =
+      hasExpectedSize && hasFooterElement && footerClassNameMatch
+    expect(componentIsValid).toBe(true)
+  })
+
+  it("has a card header icon component containing one child with nested elements and proper class names", () => {
+    /**@type {HTMLElement} */
+    const iconComponent = doc.querySelector(
+      'card-header-icon[test-id^="cardHeaderIcon0"]'
+    )
+    const componentAttributes = [
+      "href",
+      "aria-hidden",
+      "aria-label",
+      "icon-class"
+    ]
+    const componentAriaHidden = "true"
+    const componentAriaLabel = "more options"
+    const componentHref = "#"
+    const componentIconClass = "fas fa-angle-down"
+    const {
+      "aria-hidden": ariaHidden,
+      "aria-label": ariaLabel,
+      href,
+      "icon-class": iconClass
+    } = getAttributes(iconComponent, componentAttributes)
+
+    const hrefMatch = href === componentHref
+    const ariaHiddenMatch = ariaHidden === componentAriaHidden
+    const ariaLabelMatch = ariaLabel === componentAriaLabel
+    const iconClassMatch = componentIconClass === iconClass
+
+    const { hasExpectedSize, children } = getChildren(iconComponent, 1)
+    const aTag = children.find(node => node.tagName === "A")
+    const hasATag = aTag !== undefined
+    const aTagAttributes = ["href", "class", "aria-label"]
+    const {
+      href: aHref,
+      class: aClass,
+      "aria-label": aAriaLabel
+    } = getAttributes(aTag, aTagAttributes)
+    const aHrefMatch = componentHref === aHref
+    const aClassMatch = aClass.includes("card-header-icon")
+    const aAriaLabelMatch = aAriaLabel === componentAriaLabel
+    const {
+      hasExpectedSize: aHasExpectedSize,
+      children: aChildren
+    } = getChildren(aTag, 1)
+    const spanTag = aChildren.find(node => node.tagName === "SPAN")
+    const hasSpanTag = spanTag !== undefined
+    const spanClassName = spanTag.className
+    const spanClassMatch = spanClassName.includes("icon")
+    const {
+      hasExpectedSize: spanHasExpectedSize,
+      children: spanChildren
+    } = getChildren(spanTag, 1)
+    const iconTag = spanChildren.find(node => node.tagName === "I")
+    const hasIconTag = iconTag !== undefined
+    const iconTagAttributes = ["class", "aria-hidden"]
+    const {
+      class: iconClassName,
+      "aria-hidden": iconAriaHidden
+    } = getAttributes(iconTag, iconTagAttributes)
+    const hasIconClassMatch = iconClassName === componentIconClass
+    const hasIconAriaHiddenMatch = iconAriaHidden === componentAriaHidden
+    const componentIsValid =
+      hasIconAriaHiddenMatch &&
+      hasIconClassMatch &&
+      hasIconTag &&
+      spanHasExpectedSize &&
+      spanClassMatch &&
+      hasSpanTag &&
+      aHasExpectedSize &&
+      aAriaLabelMatch &&
+      aClassMatch &&
+      aHrefMatch &&
+      hasATag &&
+      hasExpectedSize &&
+      iconClassMatch &&
+      ariaLabelMatch &&
+      ariaHiddenMatch &&
+      hrefMatch
+    expect(componentIsValid).toBe(true)
+  })
+
+  it("has a card header component with one child div and proper class name", () => {
+    /**@type {HTMLElement} */
+    const headerComponent = doc.querySelector(
+      'card-header[test-id^="cardHeader0"]'
+    )
+    const childNodes = [...headerComponent.children]
+    const hasOneChild = childNodes.length === 1
+    const onlyChild = childNodes.find(node => node.tagName === "HEADER")
+    const childIsHeader = onlyChild !== undefined
+    const expectedClassName = "card-header"
+    const childHasValidClassName = onlyChild.className.includes(
+      expectedClassName
+    )
+    const componentIsValid =
+      hasOneChild && childIsHeader && childHasValidClassName
+    expect(componentIsValid).toBe(true)
+  })
+
+  it("has a card header title component with one child paragraph and proper class name", () => {
+    /** @type {HTMLElement} */
+    const titleComponent = doc.querySelector(
+      'card-header-title[test-id^="cardHeaderTitle0"]'
+    )
+    const childNodes = [...titleComponent.children]
+    const hasOneChild = childNodes.length === 1
+    const onlyChild = childNodes.find(node => node.tagName === "P")
+    const childIsParagraph = onlyChild !== undefined
+    const expectedClassName = "card-header-title"
+    const childClassName = onlyChild.className
+    const childHasValidClassName = childClassName.includes(expectedClassName)
+    const hasValidFlexGrow = titleComponent.style.flexGrow === "1"
+    const componentIsValid =
+      hasOneChild &&
+      childIsParagraph &&
+      childHasValidClassName &&
+      hasValidFlexGrow
+    expect(componentIsValid).toBe(true)
+  })
+
+  it("has a card footer component", () => {
+    /** @type {HTMLElement} */
+    const footerItemComponent = doc.querySelector(
+      'card-footer-item[test-id^="cardFooterItem1"]'
+    )
+    const { hasExpectedSize, children } = getChildren(footerItemComponent, 1)
+    const pTag = children.find(node => node.tagName === "P")
+    const hasPTag = pTag !== undefined
+    const pTagClassName = pTag.className
+    const classNameMatch = pTagClassName.includes("card-footer-item")
+
+    const componentIsValid = hasExpectedSize && hasPTag && classNameMatch
+    expect(componentIsValid).toBe(true)
   })
 })
