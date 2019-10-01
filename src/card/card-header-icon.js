@@ -1,27 +1,6 @@
 export default class CardHeaderIcon extends HTMLElement {
-  /**
-   * @param {HTMLElement | Element} element
-   * @param {string[]} attributeArray
-   */
-  getAttributes = (element, attributeArray) => {
-    /** @type {{ [key: string]: string }} */
-    const outputObj = {}
-    const attributes = attributeArray.reduce((output, attr) => {
-      output[attr] = element.getAttribute(attr)
-      return output
-    }, outputObj)
-    return attributes
-  }
-
-  /**
-   * @param {string} tagName
-   */
-  getElement = tagName => {
-    const lowerTagName = tagName.toLowerCase()
-    const element = document.createElement(lowerTagName)
-    return element
-  }
-  connectedCallback() {
+  constructor() {
+    super()
     const { getAttributes, textContent, getElement } = this
     const validAttributes = ["href", "aria-hidden", "aria-label", "icon-class"]
     const {
@@ -51,5 +30,27 @@ export default class CardHeaderIcon extends HTMLElement {
     link.appendChild(span)
     this.appendChild(link)
     return
+  }
+  /**
+   * @param {HTMLElement | Element} element
+   * @param {string[]} attributeArray
+   */
+  getAttributes = (element, attributeArray) => {
+    /** @type {{ [key: string]: string }} */
+    const outputObj = {}
+    const attributes = attributeArray.reduce((output, attr) => {
+      output[attr] = element.getAttribute(attr)
+      return output
+    }, outputObj)
+    return attributes
+  }
+
+  /**
+   * @param {string} tagName
+   */
+  getElement = tagName => {
+    const lowerTagName = tagName.toLowerCase()
+    const element = document.createElement(lowerTagName)
+    return element
   }
 }

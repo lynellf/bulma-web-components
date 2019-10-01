@@ -1,5 +1,6 @@
 export default class CardImage extends HTMLElement {
-  connectedCallback() {
+  constructor() {
+    super()
     const dimension = this.getAttribute("dimension")
     const alt = this.getAttribute("alt")
     const src = this.getAttribute("src")

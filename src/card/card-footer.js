@@ -1,5 +1,6 @@
 export default class CardFooter extends HTMLElement {
-  connectedCallback() {
+  constructor() {
+    super()
     const childNodes = [...this.childNodes]
     const container = document.createElement("footer")
     container.classList.add("card-footer")
