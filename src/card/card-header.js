@@ -1,5 +1,6 @@
 export default class CardHeader extends HTMLElement {
-  connectedCallback() {
+  constructor() {
+    super()
     const childNodes = [...this.childNodes]
     const dupHeader = childNodes.find(node => {
       // @ts-ignore

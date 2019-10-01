@@ -1,27 +1,6 @@
 export default class CardFooterItem extends HTMLElement {
-  /**
-   * @param {HTMLElement | Element} element
-   * @param {string[]} attributeArray
-   */
-  getAttributes = (element, attributeArray) => {
-    /** @type {{ [key: string]: string }} */
-    const outputObj = {}
-    const attributes = attributeArray.reduce((output, attr) => {
-      output[attr] = element.getAttribute(attr)
-      return output
-    }, outputObj)
-    return attributes
-  }
-
-  /**
-   * @param {string} tagName
-   */
-  getElement = tagName => {
-    const lowerTagName = tagName.toLowerCase()
-    const element = document.createElement(lowerTagName)
-    return element
-  }
-  connectedCallback() {
+  constructor() {
+    super()
     const { getAttributes, textContent, getElement } = this
     const childNodes = [...this.childNodes]
     const duplicates = childNodes.filter(node => {
@@ -70,5 +49,27 @@ export default class CardFooterItem extends HTMLElement {
       return
     }
     return
+  }
+  /**
+   * @param {HTMLElement | Element} element
+   * @param {string[]} attributeArray
+   */
+  getAttributes = (element, attributeArray) => {
+    /** @type {{ [key: string]: string }} */
+    const outputObj = {}
+    const attributes = attributeArray.reduce((output, attr) => {
+      output[attr] = element.getAttribute(attr)
+      return output
+    }, outputObj)
+    return attributes
+  }
+
+  /**
+   * @param {string} tagName
+   */
+  getElement = tagName => {
+    const lowerTagName = tagName.toLowerCase()
+    const element = document.createElement(lowerTagName)
+    return element
   }
 }

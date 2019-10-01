@@ -1,5 +1,6 @@
 export default class BulmaCard extends HTMLElement {
-  connectedCallback() {
+  constructor() {
+    super()
     const childNodes = [...this.childNodes]
     const cardContainer = document.createElement("div")
     cardContainer.classList.add("card")

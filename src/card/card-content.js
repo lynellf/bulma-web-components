@@ -1,5 +1,6 @@
 export default class CardContent extends HTMLElement {
-  connectedCallback() {
+  constructor() {
+    super()
     const childNodes = [...this.childNodes]
     const container = document.createElement("div")
     container.classList.add("card-content")
