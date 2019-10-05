@@ -1,75 +1,51 @@
 export default class CardFooterItem extends HTMLElement {
+  styleRoot = document.createElement("style")
+  href = ""
+  borderTop = "1px solid inherit"
+  linkColor = "blue"
+  linkHoverColor = "blue"
   constructor() {
     super()
-    const { getAttributes, textContent, getElement } = this
-    const childNodes = [...this.childNodes]
-    const duplicates = childNodes.filter(node => {
-      // @ts-ignore
-      const className = node.className
-      const hasClassName = className !== null && className !== undefined
-      if (!hasClassName) {
-        return false
-      }
-      const isDupe = className.includes("card-footer-item")
-      if (!isDupe) {
-        return false
-      }
-      return true
-    })
-    const hasDuplicates = duplicates.length > 0
-    if (!hasDuplicates) {
-      const validAttributes = ["tag", "href"]
-      const { tag, href } = getAttributes(this, validAttributes)
-      const hasHref = href !== undefined && href !== null
-      const hasTag = tag !== undefined && tag !== null
-      if (!hasTag && !hasHref) {
-        throw new Error("Invalid Component Configuration")
-      }
-      const tagIsA = hasTag ? tag.toLowerCase() === "a" : false
-      const isATag = hasHref || tagIsA
-      const element = isATag ? getElement("a") : getElement("p")
-
-      element.classList.add("card-footer-item")
-      this.classList.add("card-footer-item")
-
-      this.style.padding = "0"
-
-      if (!isATag) {
-        this.textContent = ""
-        childNodes.forEach(node => element.appendChild(node))
-      }
-
-      if (isATag) {
-        this.textContent = ""
-        element.setAttribute("href", href)
-        element.textContent = textContent
-      }
-
-      this.appendChild(element)
-      return
-    }
-    return
-  }
-  /**
-   * @param {HTMLElement | Element} element
-   * @param {string[]} attributeArray
-   */
-  getAttributes = (element, attributeArray) => {
-    /** @type {{ [key: string]: string }} */
-    const outputObj = {}
-    const attributes = attributeArray.reduce((output, attr) => {
-      output[attr] = element.getAttribute(attr)
-      return output
-    }, outputObj)
-    return attributes
   }
 
-  /**
-   * @param {string} tagName
-   */
-  getElement = tagName => {
-    const lowerTagName = tagName.toLowerCase()
-    const element = document.createElement(lowerTagName)
-    return element
+  getStyles = () => {
+    const { styleRoot, href, linkColor, linkHoverColor } = this
+    const isLink = href !== ""
+    const linkStyles = `
+      a {
+        color: ${linkColor};
+        cursor: pointer;
+        text-decoration: none;
+      }
+
+      a:hover {
+        color: ${linkHoverColor}
+      }
+    `
+    const output = `
+      a, p {
+        align-items: center
+        display: flex
+        flex-basis: 0
+        flex-grow: 1
+        flex-shrink: 0
+        justify-content: center
+        padding: $card-footer-padding
+      }
+
+      :a:not(last-child) {
+        border-right:
+      }
+
+      ${isLink ? linkStyles : ""}
+    `
+    styleRoot.textContent = output
+  }
+
+  renderElements = () => {
+    const { children, shadowRoot, styleRoot } = this
+    const childNodes = [...children]
+    shadowRoot.appendChild(styleRoot)
+    childNodes.forEach(node => shadowRoot.appendChild(node))
   }
 }
