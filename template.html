@@ -9,6 +9,12 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
     />
+    <!-- <script
+      type="module"
+      defer
+      type="application/javascript"
+      src="https://unpkg.com/@gluon/font-awesome@1.0.0"
+    ></script> -->
     <style>
       body {
         padding: 1rem;
@@ -24,12 +30,14 @@
       <h1 class="title">Card One (Actual)</h1>
       <br />
       <bulma-card test-id="cardOne">
-        <card-image
-          dimension="4by3"
-          src="https://bulma.io/images/placeholders/1280x960.png"
-          alt="Placeholder image"
-          test-id="cardImage0"
-        ></card-image>
+        <card-image>
+          <figure class="image is-4by3">
+            <img
+              src="https://bulma.io/images/placeholders/1280x960.png"
+              alt="Placeholder image"
+            />
+          </figure>
+        </card-image>
         <card-content test-id="cardContent0">
           <div class="media">
             <div class="media-left">
@@ -142,6 +150,7 @@
     </div> -->
     <br />
     <div class="container">
+      <font-awesome icon="fal fa-camera-retro fa-7x"></font-awesome>
       <h1 class="title">Card Two (Actual)</h1>
       <br />
       <bulma-card>
@@ -149,14 +158,11 @@
           <card-header-title test-id="cardHeaderTitle0">
             Component
           </card-header-title>
-          <card-header-icon
-            aria-hidden="true"
-            aria-label="more options"
-            href="#"
-            icon-class="fas fa-angle-down"
-            test-id="cardHeaderIcon0"
-          >
-          </card-header-icon>
+          <card-header-icon-link href="#">
+            <span class="icon">
+              <i class="fas fa-angle-down" aria-hidden="true"></i>
+            </span>
+          </card-header-icon-link>
         </card-header>
         <card-content>
           <div class="content">
@@ -169,11 +175,11 @@
           </div>
         </card-content>
         <card-footer test-id="cardFooter0">
-          <card-footer-item href="#" test-id="cardFooterItem0"
-            >Save</card-footer-item
+          <card-footer-link href="#top" test-id="cardFooterItem0"
+            >Save</card-footer-link
           >
-          <card-footer-item href="#">Edit</card-footer-item>
-          <card-footer-item href="#">Delete</card-footer-item>
+          <card-footer-link href="https://google.com">Edit</card-footer-link>
+          <card-footer-link href="#">Delete</card-footer-link>
         </card-footer>
       </bulma-card>
     </div>

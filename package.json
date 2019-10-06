@@ -54,6 +54,6 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
-    "core-js": "^3.2.1"
+    "emotion": "^10.0.17"
   }
 }

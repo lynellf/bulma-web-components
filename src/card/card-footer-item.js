@@ -1,75 +1,35 @@
+import { css } from 'emotion';
 export default class CardFooterItem extends HTMLElement {
+  borderTop = '1px solid inherit';
   constructor() {
-    super()
-    const { getAttributes, textContent, getElement } = this
-    const childNodes = [...this.childNodes]
-    const duplicates = childNodes.filter(node => {
-      // @ts-ignore
-      const className = node.className
-      const hasClassName = className !== null && className !== undefined
-      if (!hasClassName) {
-        return false
-      }
-      const isDupe = className.includes("card-footer-item")
-      if (!isDupe) {
-        return false
-      }
-      return true
-    })
-    const hasDuplicates = duplicates.length > 0
-    if (!hasDuplicates) {
-      const validAttributes = ["tag", "href"]
-      const { tag, href } = getAttributes(this, validAttributes)
-      const hasHref = href !== undefined && href !== null
-      const hasTag = tag !== undefined && tag !== null
-      if (!hasTag && !hasHref) {
-        throw new Error("Invalid Component Configuration")
-      }
-      const tagIsA = hasTag ? tag.toLowerCase() === "a" : false
-      const isATag = hasHref || tagIsA
-      const element = isATag ? getElement("a") : getElement("p")
-
-      element.classList.add("card-footer-item")
-      this.classList.add("card-footer-item")
-
-      this.style.padding = "0"
-
-      if (!isATag) {
-        this.textContent = ""
-        childNodes.forEach(node => element.appendChild(node))
-      }
-
-      if (isATag) {
-        this.textContent = ""
-        element.setAttribute("href", href)
-        element.textContent = textContent
-      }
-
-      this.appendChild(element)
-      return
-    }
-    return
-  }
-  /**
-   * @param {HTMLElement | Element} element
-   * @param {string[]} attributeArray
-   */
-  getAttributes = (element, attributeArray) => {
-    /** @type {{ [key: string]: string }} */
-    const outputObj = {}
-    const attributes = attributeArray.reduce((output, attr) => {
-      output[attr] = element.getAttribute(attr)
-      return output
-    }, outputObj)
-    return attributes
+    super();
+    const { getAttributes, renderElements, getStyles } = this;
+    getAttributes();
+    getStyles();
+    renderElements();
   }
 
-  /**
-   * @param {string} tagName
-   */
-  getElement = tagName => {
-    const lowerTagName = tagName.toLowerCase()
-    const element = document.createElement(lowerTagName)
-    return element
-  }
+  getAttributes = () => {
+    const { borderTop } = this;
+    this.borderTop = this.getAttribute('borderTop') || borderTop;
+  };
+
+  getStyles = () => {
+    const output = css`
+      align-items: center;
+      display: flex;
+      flex-basis: 0;
+      flex-grow: 1;
+      flex-shrink: 0;
+      justify-content: center;
+      padding: 0.75rem;
+    `;
+    this.classList.add(output);
+  };
+
+  renderElements = () => {
+    const { children } = this;
+    const childNodes = [...children];
+    childNodes.forEach(node => this.appendChild(node));
+  };
 }

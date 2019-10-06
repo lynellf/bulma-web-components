@@ -1,11 +1,37 @@
+import { css } from 'emotion';
 export default class CardContent extends HTMLElement {
+  styleRoot = document.createElement('style');
+  backgroundColor = 'transparent';
+  padding = '1.5rem';
   constructor() {
-    super()
-    const childNodes = [...this.childNodes]
-    const container = document.createElement("div")
-    container.classList.add("card-content")
-    childNodes.forEach(node => container.appendChild(node))
-    this.textContent = ""
-    this.appendChild(container)
+    super();
+    const { getAttributes, renderElements, getStyles } = this;
+    getAttributes();
+    getStyles();
+    renderElements();
   }
+
+  getAttributes = () => {
+    const { backgroundColor, padding } = this;
+
+    this.backgroundColor =
+      this.getAttribute('backgroundColor') || backgroundColor;
+    this.padding = this.getAttribute('padding') || padding;
+  };
+
+  getStyles = () => {
+    const { backgroundColor, padding } = this;
+    const output = css`
+      display: block;
+      background-color: ${backgroundColor};
+      padding: ${padding};
+    `;
+    this.classList.add(output);
+  };
+
+  renderElements = () => {
+    const { children } = this;
+    const childNodes = [...children];
+    childNodes.forEach(node => this.appendChild(node));
+  };
 }
