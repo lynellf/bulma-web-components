@@ -1,18 +1,11 @@
 import { css } from 'emotion';
 export default class CardFooterItem extends HTMLElement {
-  borderTop = '1px solid inherit';
   constructor() {
     super();
-    const { getAttributes, renderElements, getStyles } = this;
-    getAttributes();
+    const { renderElements, getStyles } = this;
     getStyles();
     renderElements();
   }
-
-  getAttributes = () => {
-    const { borderTop } = this;
-    this.borderTop = this.getAttribute('borderTop') || borderTop;
-  };
 
   getStyles = () => {
     const output = css`
