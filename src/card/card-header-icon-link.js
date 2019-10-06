@@ -1,13 +1,11 @@
 import { css } from 'emotion';
-export default class CardFooterLink extends HTMLElement {
-  borderTop = '1px solid hsl(0, 0%, 86%)';
-  linkColor = '#3273dc';
 
-  linkHoverColor = '#363636';
-  href = '#';
+export default class CardHeaderIconLink extends HTMLElement {
+  href = '';
   noreferrer = 'false';
   target = '_self';
-
+  padding = '0.75rem';
+  color = '#3273dc';
   constructor() {
     super();
     const { getStyles, renderElements, handleClick, getAttributes } = this;
@@ -18,20 +16,13 @@ export default class CardFooterLink extends HTMLElement {
   }
 
   getAttributes = () => {
-    const {
-      borderTop,
-      href,
-      linkColor,
-      linkHoverColor,
-      noReferrer,
-      target
-    } = this;
-    this.borderTop = this.getAttribute('borderTop') || borderTop;
-    this.linkColor = this.getAttribute('linkColor') || linkColor;
-    this.linkHoverColor = this.getAttribute('linkHoverColor') || linkHoverColor;
+    const { href, noReferrer, padding, target, color } = this;
+
     this.href = this.getAttribute('href') || href;
     this.noReferrer = this.getAttribute('noReferrer') || noReferrer;
     this.target = this.getAttribute('target') || target;
+    this.padding = this.getAttribute('padding') || padding;
+    this.color = this.getAttribute('color') || color;
   };
 
   handleClick = () => {
@@ -45,21 +36,16 @@ export default class CardFooterLink extends HTMLElement {
   };
 
   getStyles = () => {
-    const { linkColor, linkHoverColor } = this;
+    const { padding, color } = this;
     const output = css`
       align-items: center;
-      color: ${linkColor};
+      color: ${color};
       cursor: pointer;
       display: flex;
-      flex-basis: 0;
-      flex-grow: 1;
-      flex-shrink: 0;
       justify-content: center;
-      padding: 0.75rem;
-      text-decoration: none;
-
+      padding: ${padding};
       &:hover {
-        color: ${linkHoverColor}
+        pointer: cursor;
       }
     `;
     this.classList.add(output);

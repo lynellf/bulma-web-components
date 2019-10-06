@@ -1,32 +1,43 @@
+import { css } from 'emotion'
 export default class CardFooter extends HTMLElement {
-  styleRoot = document.createElement('style')
   backgroundColor = 'transparent'
   borderTop = "1px solid hsl(0, 0%, 86%)"
   constructor() {
     super()
-    const { getStyles, renderElements } = this
-    this.attachShadow({ mode: 'open' })
-    getStyles()
-    renderElements()
+    const { getAttributes, getStyles, renderElements } = this
+    getAttributes();
+    getStyles();
+    renderElements();
+  }
+
+  getAttributes = () => {
+    const {
+      borderTop,
+      backgroundColor
+    } = this;
+    this.borderTop = this.getAttribute('borderTop') || borderTop;
+    this.backgroundColor = this.getAttribute('backgroundColor') || backgroundColor;
   }
 
   getStyles = () => {
-    const { styleRoot, backgroundColor, borderTop } = this
-    const output = `
-      :host {
-        background-color: ${backgroundColor};
-        border-top: ${borderTop};
-        align-items: stretch;
-        display: flex;
+    const { backgroundColor, borderTop } = this
+    const output = css`
+      background-color: ${backgroundColor};
+      border-top: ${borderTop};
+      align-items: stretch;
+      display: flex;
+
+      card-footer-link:not(:last-child),
+      card-footer-item:not(:last-child) {
+        border-right: 1px solid hsl(0, 0%, 86%);
       }
-    `
-    styleRoot.textContent = output
+    `;
+    this.classList.add(output)
   }
 
   renderElements = () => {
-    const { children, shadowRoot, styleRoot } = this
+    const { children } = this
     const childNodes = [...children]
-    shadowRoot.appendChild(styleRoot)
-    childNodes.forEach(node => shadowRoot.appendChild(node))
+    childNodes.forEach(node => this.appendChild(node))
   }
 }

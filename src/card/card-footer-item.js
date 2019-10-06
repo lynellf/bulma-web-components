@@ -1,51 +1,35 @@
+import { css } from 'emotion';
 export default class CardFooterItem extends HTMLElement {
-  styleRoot = document.createElement("style")
-  href = ""
-  borderTop = "1px solid inherit"
-  linkColor = "blue"
-  linkHoverColor = "blue"
+  borderTop = '1px solid inherit';
   constructor() {
-    super()
+    super();
+    const { getAttributes, renderElements, getStyles } = this;
+    getAttributes();
+    getStyles();
+    renderElements();
   }
+
+  getAttributes = () => {
+    const { borderTop } = this;
+    this.borderTop = this.getAttribute('borderTop') || borderTop;
+  };
 
   getStyles = () => {
-    const { styleRoot, href, linkColor, linkHoverColor } = this
-    const isLink = href !== ""
-    const linkStyles = `
-      a {
-        color: ${linkColor};
-        cursor: pointer;
-        text-decoration: none;
-      }
-
-      a:hover {
-        color: ${linkHoverColor}
-      }
-    `
-    const output = `
-      a, p {
-        align-items: center
-        display: flex
-        flex-basis: 0
-        flex-grow: 1
-        flex-shrink: 0
-        justify-content: center
-        padding: $card-footer-padding
-      }
-
-      :a:not(last-child) {
-        border-right:
-      }
-
-      ${isLink ? linkStyles : ""}
-    `
-    styleRoot.textContent = output
-  }
+    const output = css`
+      align-items: center;
+      display: flex;
+      flex-basis: 0;
+      flex-grow: 1;
+      flex-shrink: 0;
+      justify-content: center;
+      padding: 0.75rem;
+    `;
+    this.classList.add(output);
+  };
 
   renderElements = () => {
-    const { children, shadowRoot, styleRoot } = this
-    const childNodes = [...children]
-    shadowRoot.appendChild(styleRoot)
-    childNodes.forEach(node => shadowRoot.appendChild(node))
-  }
+    const { children } = this;
+    const childNodes = [...children];
+    childNodes.forEach(node => this.appendChild(node));
+  };
 }

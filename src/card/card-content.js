@@ -1,31 +1,37 @@
+import { css } from 'emotion';
 export default class CardContent extends HTMLElement {
-  styleRoot = document.createElement("style")
-  backgroundColor = "transparent"
-  padding = "1.5rem"
+  styleRoot = document.createElement('style');
+  backgroundColor = 'transparent';
+  padding = '1.5rem';
   constructor() {
-    super()
-    const { renderElements, getStyles } = this
-    this.attachShadow({ mode: "open" })
-    getStyles()
-    renderElements()
+    super();
+    const { getAttributes, renderElements, getStyles } = this;
+    getAttributes();
+    getStyles();
+    renderElements();
   }
+
+  getAttributes = () => {
+    const { backgroundColor, padding } = this;
+
+    this.backgroundColor =
+      this.getAttribute('backgroundColor') || backgroundColor;
+    this.padding = this.getAttribute('padding') || padding;
+  };
 
   getStyles = () => {
-    const { backgroundColor, padding, styleRoot } = this
-    const output = `
-      :host {
-        display: block;
-        background-color: ${backgroundColor};
-        padding: ${padding};
-      }
-    `
-    styleRoot.textContent = output
-  }
+    const { backgroundColor, padding } = this;
+    const output = css`
+      display: block;
+      background-color: ${backgroundColor};
+      padding: ${padding};
+    `;
+    this.classList.add(output);
+  };
 
   renderElements = () => {
-    const { children, shadowRoot, styleRoot } = this
-    const childNodes = [...children]
-    shadowRoot.appendChild(styleRoot)
-    childNodes.forEach(node => shadowRoot.appendChild(node))
-  }
+    const { children } = this;
+    const childNodes = [...children];
+    childNodes.forEach(node => this.appendChild(node));
+  };
 }

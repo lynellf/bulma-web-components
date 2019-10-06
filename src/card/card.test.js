@@ -2,7 +2,9 @@ const { JSDOM } = require("jsdom")
 
 describe("Bulma Card Web Components Page", () => {
   let htmlString = ""
+  /**@type {Window} win */
   let win
+  /**@type {Document} doc */
   let doc
 
   beforeAll(async () => {
@@ -40,15 +42,25 @@ describe("Bulma Card Web Components Page", () => {
   it("has card one", () => {
     const cardOne = doc.querySelector('bulma-card[test-id^="cardOne"]')
     const cardOneExists = cardOne !== null
-    const cardChildren = [...cardOne.children]
-    const hasOneChild = cardChildren.length === 1
-    const cardDiv = cardChildren[0]
-    const childIsDiv = cardDiv.tagName === "DIV"
-    const cardDivClass = cardDiv.className
-    const hasValidClass = cardDivClass.includes("card")
-    const cardDivExists = hasOneChild && childIsDiv && hasValidClass
-    const componentIsValid = cardOneExists && cardDivExists
-    expect(componentIsValid).toBe(true)
+    const computedStyles = win.getComputedStyle(cardOne)
+    const cardStyles = {
+      'background-color': computedStyles['background-color'],
+      'box-shadow': computedStyles['box-shadow'],
+      display: computedStyles.display,
+      'max-width': computedStyles['max-width'],
+      position: computedStyles.position
+    }
+    const expectedStyles = {
+      'background-color': 'rgb(255, 255, 255)',
+      'box-shadow':
+        '0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1)',
+      display: 'block',
+      'max-width': '100%',
+      position: 'relative'
+    };
+    const hasStyleMatch = JSON.stringify(cardStyles) === JSON.stringify(expectedStyles)
+    const hasCardOne = cardOneExists && hasStyleMatch
+    expect(hasCardOne).toBe(true)
   })
 
   it("has a card content component", () => {
