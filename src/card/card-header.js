@@ -33,3 +33,5 @@ export default class CardHeader extends HTMLElement {
     childNodes.forEach(node => this.appendChild(node));
   };
 }
+
+customElements.define('b-card-header', CardHeader);

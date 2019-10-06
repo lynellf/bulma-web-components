@@ -59,7 +59,11 @@ export default class CardFooterLink extends HTMLElement {
       text-decoration: none;
 
       &:hover {
-        color: ${linkHoverColor}
+        color: ${linkHoverColor};
+      }
+
+      &:not(:last-child) {
+        border-right: 1px solid hsl(0, 0%, 86%);
       }
     `;
     this.classList.add(output);
@@ -75,3 +79,5 @@ export default class CardFooterLink extends HTMLElement {
     this.removeEventListener('click', handleClick);
   };
 }
+
+customElements.define('b-card-footer-link', CardFooterLink);

@@ -41,3 +41,5 @@ export default class CardFooter extends HTMLElement {
     childNodes.forEach(node => this.appendChild(node))
   }
 }
+
+customElements.define('b-card-footer', CardFooter);
