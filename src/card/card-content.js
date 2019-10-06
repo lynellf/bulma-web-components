@@ -1,6 +1,5 @@
 import { css } from 'emotion';
 export default class CardContent extends HTMLElement {
-  styleRoot = document.createElement('style');
   backgroundColor = 'transparent';
   padding = '1.5rem';
   constructor() {
