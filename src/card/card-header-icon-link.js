@@ -61,3 +61,5 @@ export default class CardHeaderIconLink extends HTMLElement {
     this.removeEventListener('click', handleClick);
   };
 }
+
+customElements.define('b-card-header-icon-link', CardHeaderIconLink);

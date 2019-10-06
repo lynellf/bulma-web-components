@@ -35,3 +35,5 @@ export default class CardContent extends HTMLElement {
     childNodes.forEach(node => this.appendChild(node));
   };
 }
+
+customElements.define('b-card-content', CardContent);

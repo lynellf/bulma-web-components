@@ -20,3 +20,5 @@ export default class CardImage extends HTMLElement {
     childNodes.forEach(node => this.appendChild(node));
   };
 }
+
+customElements.define('b-card-image', CardImage);

@@ -2,7 +2,7 @@ import { css } from 'emotion';
 export default class CardHeaderTitle extends HTMLElement {
   weight = '700';
   padding = '0.75rem';
-  color = '#363636'
+  color = '#363636';
   constructor() {
     super();
     const { getAttributes, getStyles, renderElements } = this;
@@ -36,8 +36,10 @@ export default class CardHeaderTitle extends HTMLElement {
   };
 
   renderElements = () => {
-    const { children } = this
-    const childNodes = [...children]
-    childNodes.forEach(node => this.appendChild(node))
-  }
+    const { children } = this;
+    const childNodes = [...children];
+    childNodes.forEach(node => this.appendChild(node));
+  };
 }
+
+customElements.define('b-card-header-title', CardHeaderTitle);

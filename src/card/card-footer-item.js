@@ -33,3 +33,5 @@ export default class CardFooterItem extends HTMLElement {
     childNodes.forEach(node => this.appendChild(node));
   };
 }
+
+customElements.define('b-card-footer-item', CardFooterItem);
